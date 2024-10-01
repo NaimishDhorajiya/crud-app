@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Button } from "react-bootstrap";
 import ProductDetails from "./components/ProductDetails";
 import ProductModal from "./components/ProductModal";
+import CommonButton from "./common/CommonButton";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -49,9 +50,9 @@ const App = () => {
         Product Management
       </h1>
       <div className="d-flex align-items-center justify-content-end my-2">
-        <Button variant="primary" onClick={() => setShowModal(true)}>
+        <CommonButton variant="primary" onClick={() => setShowModal(true)}>
           Add Product
-        </Button>
+        </CommonButton>
       </div>
       <ProductDetails
         products={products}
