@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import CommonModal from "../common/CommonModal";
+import CommonButton from "../common/CommonButton";
 
 // Component for adding or editing products
 const ProductModal = ({ show, onHide, onSave, product }) => {
@@ -11,7 +13,6 @@ const ProductModal = ({ show, onHide, onSave, product }) => {
   });
   const [error, setError] = useState("");
 
-  // Set form fields if editing a product
   useEffect(() => {
     if (product) {
       setProductData(product);
@@ -20,7 +21,6 @@ const ProductModal = ({ show, onHide, onSave, product }) => {
     }
   }, [product]);
 
-  // Function to validate and save the product
   const handleSubmit = () => {
     const { name, details, price, quantity } = productData;
 
@@ -43,64 +43,63 @@ const ProductModal = ({ show, onHide, onSave, product }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title>{product ? "Edit Product" : "Add Product"}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {error && <div className="alert alert-danger">{error}</div>}
-        <Form>
-          <Form.Group>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={productData.name}
-              onChange={handleChange}
-              placeholder="Enter product name"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Details</Form.Label>
-            <Form.Control
-              type="text"
-              name="details"
-              value={productData.details}
-              onChange={handleChange}
-              placeholder="Enter product details"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Price</Form.Label>
-            <Form.Control
-              type="number"
-              name="price"
-              value={productData.price}
-              onChange={handleChange}
-              placeholder="Enter product price"
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Quantity</Form.Label>
-            <Form.Control
-              type="number"
-              name="quantity"
-              value={productData.quantity}
-              onChange={handleChange}
-              placeholder="Enter product quantity"
-            />
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
+    <CommonModal
+      show={show}
+      onHide={onHide}
+      title={product ? "Edit Product" : "Add Product"}
+      footer={[
+        <CommonButton variant="secondary" onClick={onHide}>
           Close
-        </Button>
-        <Button variant="primary" onClick={handleSubmit}>
-          Save
-        </Button>
-      </Modal.Footer>
-    </Modal>
+        </CommonButton>,
+        <CommonButton variant="primary" onClick={handleSubmit}>
+          Save Changes
+        </CommonButton>,
+      ]}
+    >
+      {error && <div className="alert alert-danger">{error}</div>}
+      <Form>
+        <Form.Group>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={productData.name}
+            onChange={handleChange}
+            placeholder="Enter product name"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Details</Form.Label>
+          <Form.Control
+            type="text"
+            name="details"
+            value={productData.details}
+            onChange={handleChange}
+            placeholder="Enter product details"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            type="number"
+            name="price"
+            value={productData.price}
+            onChange={handleChange}
+            placeholder="Enter product price"
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Quantity</Form.Label>
+          <Form.Control
+            type="number"
+            name="quantity"
+            value={productData.quantity}
+            onChange={handleChange}
+            placeholder="Enter product quantity"
+          />
+        </Form.Group>
+      </Form>
+    </CommonModal>
   );
 };
 
